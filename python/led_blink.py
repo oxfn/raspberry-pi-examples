@@ -3,6 +3,12 @@ import sys
 import RPi.GPIO as GPIO
 from time import sleep
 
+""" Basic GPIO port output example. This programs simply blinks on LED by specified interval
+
+    Usage:
+    led_blink.py [port] [interval]
+"""
+
 def main(args):
     """Main procedure"""
 
@@ -21,8 +27,11 @@ def blink(port, interval):
     # Disable GPIO warnings about busy ports etc
     GPIO.setwarnings(False)
 
-    # Info message
-    print("BLINK PORT:{} INTERVAL:{}".format(port, interval))
+    # Debug info
+    print("PI REVISION:", GPIO.RPI_REVISION)
+    print("PROGRAM: LED_BLINK")
+    print("PORT:", port)
+    print("INTERVAL:", interval)
 
     # Set pin numbering mode
     GPIO.setmode(GPIO.BOARD)
@@ -53,5 +62,7 @@ if __name__ == "__main__":
         print("BREAK")
     except Exception as e:
         print("ERROR:", e)
+
+    GPIO.cleanup()
     
         

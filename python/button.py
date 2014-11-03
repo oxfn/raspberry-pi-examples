@@ -7,7 +7,7 @@ from time import sleep
     in loop, reads value from control port (with button) and sends its state
     to output port (with LED)
 
-    Usage: led_button.py [port]
+    Usage: button.py [port]
 """
 
 def main(args):
@@ -19,7 +19,7 @@ def main(args):
 
     # Debug info
     print("PI REVISION:", GPIO.RPI_REVISION)
-    print("PROGRAM: LED_BUTTON")
+    print("PROGRAM: BUTTON")
     print("LED PORT:", led_port)
     print("BUTTON PORT:", button_port)
 

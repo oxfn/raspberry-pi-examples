@@ -3,20 +3,23 @@ import sys
 import RPi.GPIO as GPIO
 from time import sleep
 
-""" Basic GPIO port output example. This programs simply blinks on LED by specified interval
+""" Basic GPIO port input example. This programs reads data from digital GPIO port
 
     Usage:
     led_blink.py [port] [interval]
 """
 
+DEFAULT_PORT = 12
+DEFAULT_INTERVAL = 0.2
+
 def main(args):
     """Main procedure"""
 
     # Check port argument
-    port = int(args[0]) if len(args) > 0 else 11
+    port = int(args[0]) if len(args) > 0 else DEFAULT_PORT
 
     # Check interval argument
-    interval = float(args[1]) if len(args) > 1 else 0.3
+    interval = float(args[1]) if len(args) > 1 else DEFAULT_INTERVAL
 
     # Go blinking
     blink(port, interval)
@@ -29,30 +32,36 @@ def blink(port, interval):
 
     # Debug info
     print("PI REVISION:", GPIO.RPI_REVISION)
-    print("PROGRAM: LED_BLINK")
+    print("PROGRAM: PORT_READ")
     print("PORT:", port)
-    print("INTERVAL:", interval)
 
     # Set pin numbering mode
     GPIO.setmode(GPIO.BOARD)
 
     # Begin port output
-    GPIO.setup(port, GPIO.OUT)
+    GPIO.setup(port, GPIO.IN)
+    
+    # Start value
+    val = -1
 
     # Eternal loop
     while True:
 
-        # Set ~port to 0
-        GPIO.output(port, GPIO.LOW)
-
         # Wait
         sleep(interval)
 
-        # Set port to 1
-        GPIO.output(port, GPIO.HIGH)
+        # Read next value from port
+        new_val = GPIO.input(port)
 
-        # Wait
-        sleep(interval)
+        # Only if value has changed
+        if new_val != val:
+
+            # Save it and trace it
+            val = new_val
+            if val == GPIO.LOW:
+                print('OFF')
+            else:
+                print('ON')
 
 # Entry point
 if __name__ == "__main__":

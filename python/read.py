@@ -4,9 +4,10 @@ import RPi.GPIO as GPIO
 from time import sleep
 
 """ Basic GPIO port input example. This programs reads data from digital GPIO port
+    by specified time interval
 
     Usage:
-    led_blink.py [port] [interval]
+    read.py [port] [interval]
 """
 
 DEFAULT_PORT = 12
@@ -21,11 +22,11 @@ def main(args):
     # Check interval argument
     interval = float(args[1]) if len(args) > 1 else DEFAULT_INTERVAL
 
-    # Go blinking
-    blink(port, interval)
+    # Start reading cycle
+    read(port, interval)
 
-def blink(port, interval):
-    """Blink procedure"""
+def read(port, interval):
+    """Read procedure"""
 
     # Disable GPIO warnings about busy ports etc
     GPIO.setwarnings(False)
@@ -38,7 +39,7 @@ def blink(port, interval):
     # Set pin numbering mode
     GPIO.setmode(GPIO.BOARD)
 
-    # Begin port output
+    # Begin port input
     GPIO.setup(port, GPIO.IN)
     
     # Start value
